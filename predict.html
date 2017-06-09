@@ -1,0 +1,105 @@
+<html>
+	<head>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+
+	</head>
+
+	<body>
+		<input type="button" onclick="start_vis()" value="Start Visualization"/>
+		<span id="index">0</span>
+ 		
+		<div>Predicted Probabilities</div>
+		<span id="prob"></span>
+		<script>
+
+			function start_vis() {
+				//d3.selectAll("span").remove();
+				//var prefix = "../../project/deeplearningMentor/processData/test"
+				var prefix = "processData/test"
+				//var dir = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
+				var dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+"relu";
+				var data = new Array(403).fill(0);;
+				var height = 1000;
+				var width = 700;
+				var index = 1;
+
+				var color = d3.scale.linear()
+						.domain([0, 1])
+						.range(["white", "red"]);
+
+				var x = d3.scale.linear()
+							.domain([0, 100])
+							.range([5, width]);
+
+				var y = d3.scale.linear()
+							.domain([0, 1])
+							.range([height, 0]);
+
+				d3.json(dir + "/predict.json", function (data1) {
+					//console.log(data.trainIndex);
+
+					var canvas = d3.selectAll("#prob")
+								.append("svg")
+								.attr("width", width+100)
+								.attr("height", height+100)
+								.append("g")
+								.attr("transform", "translate(20, 20)")
+			
+					var circles = canvas.selectAll("circle")
+							.data(data)
+							.enter()
+							.append("circle")
+							.attr("cx", function(d, i) {return ((i+1)*30)%width;})
+							.attr("cy", function(d, i) {return 30 * (((i+1)*30)/width);})
+							.attr("fill", function(d) {return color(d);})
+							.attr("r", 15)
+							.attr("stroke", "#000")
+							.attr("stroke-width", 1)
+							
+					var nodes = canvas.selectAll("text")
+							.data(data)
+							.enter()
+							.append("text")
+							.attr("transform", function(d, i) {return "translate("+((i+1)*30)%width+","+30 * (((i+1)*30)/width)+")";})
+							//.attr("cy", function(d, i) {return 25 * (((i+1)*20)/width);})
+							.attr("stroke", "#000")
+							.attr("stroke-width", 0.4)
+							.attr("font-size", "0.5em")
+							.text(function(d,i) {return i;});
+
+					// canvas.selectAll("path")
+					// 		.data([data])
+					// 		.enter()
+					// 		.append("path")
+					// 		.attr("d", line)
+									
+					setInterval(function() {
+						var v = data1.shift();
+						data = []
+						temp = v.probs;
+						arrayLength = temp.length;
+						for (var i = 0; i < arrayLength; i++) {
+							data[i] = temp[i].prob;
+						} 
+						d3.select("#index").text(index++);
+						circles = canvas.selectAll("circle")
+							.data(data)
+							//.enter()
+							//.append("circle")
+							.attr("cx", function(d, i) {return ((i+1)*30)%width;})
+							.attr("cy", function(d, i) {return 30 * (((i+1)*30)/width);})
+							.attr("fill", function(d) {return color(d);})
+							.attr("r", 15)
+							.attr("stroke", "#000")
+							.attr("stroke-width", 1);
+					}, 1000)
+				})
+
+			}
+			//start_vis();
+			
+
+		</script>
+
+	</body>
+</html>
