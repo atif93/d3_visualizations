@@ -1,0 +1,602 @@
+[
+    {
+        "trainCost": 880.978, 
+        "trainIndex": 0.501951578233, 
+        "iteration": 0, 
+        "weightSize": 153.808
+    }, 
+    {
+        "trainCost": 1010.29, 
+        "trainIndex": 0.812648489648, 
+        "iteration": 1, 
+        "weightSize": 67.9421
+    }, 
+    {
+        "trainCost": 815.531, 
+        "trainIndex": 0.790191198099, 
+        "iteration": 2, 
+        "weightSize": 80.5599
+    }, 
+    {
+        "trainCost": 725.502, 
+        "trainIndex": 0.849813327299, 
+        "iteration": 3, 
+        "weightSize": 89.3179
+    }, 
+    {
+        "trainCost": 659.824, 
+        "trainIndex": 0.894671342912, 
+        "iteration": 4, 
+        "weightSize": 92.3849
+    }, 
+    {
+        "trainCost": 636.459, 
+        "trainIndex": 0.919815589999, 
+        "iteration": 5, 
+        "weightSize": 93.9976
+    }, 
+    {
+        "trainCost": 620.731, 
+        "trainIndex": 0.921597465777, 
+        "iteration": 6, 
+        "weightSize": 95.556
+    }, 
+    {
+        "trainCost": 602.974, 
+        "trainIndex": 0.940434438285, 
+        "iteration": 7, 
+        "weightSize": 97.5638
+    }, 
+    {
+        "trainCost": 587.929, 
+        "trainIndex": 0.943460798733, 
+        "iteration": 8, 
+        "weightSize": 99.2937
+    }, 
+    {
+        "trainCost": 578.218, 
+        "trainIndex": 0.948891277294, 
+        "iteration": 9, 
+        "weightSize": 101.387
+    }, 
+    {
+        "trainCost": 567.825, 
+        "trainIndex": 0.953077271185, 
+        "iteration": 10, 
+        "weightSize": 103.423
+    }, 
+    {
+        "trainCost": 558.888, 
+        "trainIndex": 0.955707659237, 
+        "iteration": 11, 
+        "weightSize": 105.659
+    }, 
+    {
+        "trainCost": 545.451, 
+        "trainIndex": 0.961166421541, 
+        "iteration": 12, 
+        "weightSize": 107.79
+    }, 
+    {
+        "trainCost": 533.327, 
+        "trainIndex": 0.966455481389, 
+        "iteration": 13, 
+        "weightSize": 109.723
+    }, 
+    {
+        "trainCost": 520.495, 
+        "trainIndex": 0.97188595995, 
+        "iteration": 14, 
+        "weightSize": 111.324
+    }, 
+    {
+        "trainCost": 511.995, 
+        "trainIndex": 0.975364860278, 
+        "iteration": 15, 
+        "weightSize": 112.794
+    }, 
+    {
+        "trainCost": 506.312, 
+        "trainIndex": 0.975025455368, 
+        "iteration": 16, 
+        "weightSize": 114.04
+    }, 
+    {
+        "trainCost": 503.602, 
+        "trainIndex": 0.974261794321, 
+        "iteration": 17, 
+        "weightSize": 115.566
+    }, 
+    {
+        "trainCost": 500.889, 
+        "trainIndex": 0.973582984501, 
+        "iteration": 18, 
+        "weightSize": 117.302
+    }, 
+    {
+        "trainCost": 496.219, 
+        "trainIndex": 0.974629482973, 
+        "iteration": 19, 
+        "weightSize": 119.137
+    }, 
+    {
+        "trainCost": 487.373, 
+        "trainIndex": 0.977514424709, 
+        "iteration": 20, 
+        "weightSize": 121.101
+    }, 
+    {
+        "trainCost": 479.45, 
+        "trainIndex": 0.981361013689, 
+        "iteration": 21, 
+        "weightSize": 122.319
+    }, 
+    {
+        "trainCost": 473.274, 
+        "trainIndex": 0.982860052042, 
+        "iteration": 22, 
+        "weightSize": 123.546
+    }, 
+    {
+        "trainCost": 470.306, 
+        "trainIndex": 0.982860052042, 
+        "iteration": 23, 
+        "weightSize": 124.414
+    }, 
+    {
+        "trainCost": 466.191, 
+        "trainIndex": 0.98294490327, 
+        "iteration": 24, 
+        "weightSize": 125.643
+    }, 
+    {
+        "trainCost": 462.729, 
+        "trainIndex": 0.98317117321, 
+        "iteration": 25, 
+        "weightSize": 126.66
+    }, 
+    {
+        "trainCost": 459.232, 
+        "trainIndex": 0.98317117321, 
+        "iteration": 26, 
+        "weightSize": 128.084
+    }, 
+    {
+        "trainCost": 454.692, 
+        "trainIndex": 0.98464192782, 
+        "iteration": 27, 
+        "weightSize": 129.18
+    }, 
+    {
+        "trainCost": 450.922, 
+        "trainIndex": 0.984953048987, 
+        "iteration": 28, 
+        "weightSize": 130.218
+    }, 
+    {
+        "trainCost": 447.111, 
+        "trainIndex": 0.986282384885, 
+        "iteration": 29, 
+        "weightSize": 131.438
+    }, 
+    {
+        "trainCost": 442.252, 
+        "trainIndex": 0.987413734585, 
+        "iteration": 30, 
+        "weightSize": 132.127
+    }, 
+    {
+        "trainCost": 437.266, 
+        "trainIndex": 0.989506731531, 
+        "iteration": 31, 
+        "weightSize": 132.851
+    }, 
+    {
+        "trainCost": 433.438, 
+        "trainIndex": 0.990411811291, 
+        "iteration": 32, 
+        "weightSize": 133.293
+    }, 
+    {
+        "trainCost": 431.201, 
+        "trainIndex": 0.989959271411, 
+        "iteration": 33, 
+        "weightSize": 133.844
+    }, 
+    {
+        "trainCost": 430.33, 
+        "trainIndex": 0.988347098088, 
+        "iteration": 34, 
+        "weightSize": 134.319
+    }, 
+    {
+        "trainCost": 432.104, 
+        "trainIndex": 0.986282384885, 
+        "iteration": 35, 
+        "weightSize": 135.203
+    }, 
+    {
+        "trainCost": 434.981, 
+        "trainIndex": 0.984387374137, 
+        "iteration": 36, 
+        "weightSize": 136.417
+    }, 
+    {
+        "trainCost": 431.706, 
+        "trainIndex": 0.985405588868, 
+        "iteration": 37, 
+        "weightSize": 138.341
+    }, 
+    {
+        "trainCost": 429.559, 
+        "trainIndex": 0.986819775993, 
+        "iteration": 38, 
+        "weightSize": 140.015
+    }, 
+    {
+        "trainCost": 426.179, 
+        "trainIndex": 0.98656522231, 
+        "iteration": 39, 
+        "weightSize": 141.638
+    }, 
+    {
+        "trainCost": 420.289, 
+        "trainIndex": 0.989139042878, 
+        "iteration": 40, 
+        "weightSize": 142.731
+    }, 
+    {
+        "trainCost": 414.857, 
+        "trainIndex": 0.990920918656, 
+        "iteration": 41, 
+        "weightSize": 143.583
+    }, 
+    {
+        "trainCost": 411.047, 
+        "trainIndex": 0.992448240751, 
+        "iteration": 42, 
+        "weightSize": 143.987
+    }, 
+    {
+        "trainCost": 408.35, 
+        "trainIndex": 0.993664441679, 
+        "iteration": 43, 
+        "weightSize": 144.296
+    }, 
+    {
+        "trainCost": 406.161, 
+        "trainIndex": 0.993692725421, 
+        "iteration": 44, 
+        "weightSize": 144.579
+    }, 
+    {
+        "trainCost": 404.234, 
+        "trainIndex": 0.993947279104, 
+        "iteration": 45, 
+        "weightSize": 144.834
+    }, 
+    {
+        "trainCost": 402.622, 
+        "trainIndex": 0.993325036769, 
+        "iteration": 46, 
+        "weightSize": 145.19
+    }, 
+    {
+        "trainCost": 401.22, 
+        "trainIndex": 0.993042199344, 
+        "iteration": 47, 
+        "weightSize": 145.478
+    }, 
+    {
+        "trainCost": 400.49, 
+        "trainIndex": 0.992165403326, 
+        "iteration": 48, 
+        "weightSize": 145.966
+    }, 
+    {
+        "trainCost": 400.464, 
+        "trainIndex": 0.991486593506, 
+        "iteration": 49, 
+        "weightSize": 146.478
+    }, 
+    {
+        "trainCost": 398.484, 
+        "trainIndex": 0.991486593506, 
+        "iteration": 50, 
+        "weightSize": 147.25
+    }, 
+    {
+        "trainCost": 395.854, 
+        "trainIndex": 0.992589659464, 
+        "iteration": 51, 
+        "weightSize": 147.776
+    }, 
+    {
+        "trainCost": 393.35, 
+        "trainIndex": 0.993127050571, 
+        "iteration": 52, 
+        "weightSize": 148.306
+    }, 
+    {
+        "trainCost": 392.129, 
+        "trainIndex": 0.993353320511, 
+        "iteration": 53, 
+        "weightSize": 148.684
+    }, 
+    {
+        "trainCost": 390.244, 
+        "trainIndex": 0.993013915601, 
+        "iteration": 54, 
+        "weightSize": 149.096
+    }, 
+    {
+        "trainCost": 388.903, 
+        "trainIndex": 0.993183618056, 
+        "iteration": 55, 
+        "weightSize": 149.573
+    }, 
+    {
+        "trainCost": 387.937, 
+        "trainIndex": 0.992702794434, 
+        "iteration": 56, 
+        "weightSize": 149.977
+    }, 
+    {
+        "trainCost": 387.829, 
+        "trainIndex": 0.992674510691, 
+        "iteration": 57, 
+        "weightSize": 150.645
+    }, 
+    {
+        "trainCost": 386.084, 
+        "trainIndex": 0.992504808236, 
+        "iteration": 58, 
+        "weightSize": 151.189
+    }, 
+    {
+        "trainCost": 383.955, 
+        "trainIndex": 0.993381604254, 
+        "iteration": 59, 
+        "weightSize": 151.762
+    }, 
+    {
+        "trainCost": 381.967, 
+        "trainIndex": 0.993381604254, 
+        "iteration": 60, 
+        "weightSize": 152.222
+    }, 
+    {
+        "trainCost": 380.327, 
+        "trainIndex": 0.993834144134, 
+        "iteration": 61, 
+        "weightSize": 152.703
+    }, 
+    {
+        "trainCost": 378.928, 
+        "trainIndex": 0.993890711619, 
+        "iteration": 62, 
+        "weightSize": 153.236
+    }, 
+    {
+        "trainCost": 377.565, 
+        "trainIndex": 0.994032130331, 
+        "iteration": 63, 
+        "weightSize": 153.623
+    }, 
+    {
+        "trainCost": 376.434, 
+        "trainIndex": 0.994314967757, 
+        "iteration": 64, 
+        "weightSize": 154.117
+    }, 
+    {
+        "trainCost": 375.523, 
+        "trainIndex": 0.994003846589, 
+        "iteration": 65, 
+        "weightSize": 154.511
+    }, 
+    {
+        "trainCost": 374.082, 
+        "trainIndex": 0.994314967757, 
+        "iteration": 66, 
+        "weightSize": 155.062
+    }, 
+    {
+        "trainCost": 372.627, 
+        "trainIndex": 0.994456386469, 
+        "iteration": 67, 
+        "weightSize": 155.364
+    }, 
+    {
+        "trainCost": 371.013, 
+        "trainIndex": 0.995078628804, 
+        "iteration": 68, 
+        "weightSize": 155.79
+    }, 
+    {
+        "trainCost": 369.821, 
+        "trainIndex": 0.994767507637, 
+        "iteration": 69, 
+        "weightSize": 156.036
+    }, 
+    {
+        "trainCost": 368.865, 
+        "trainIndex": 0.994937210092, 
+        "iteration": 70, 
+        "weightSize": 156.457
+    }, 
+    {
+        "trainCost": 367.662, 
+        "trainIndex": 0.994739223894, 
+        "iteration": 71, 
+        "weightSize": 156.708
+    }, 
+    {
+        "trainCost": 366.456, 
+        "trainIndex": 0.995022061319, 
+        "iteration": 72, 
+        "weightSize": 157.087
+    }, 
+    {
+        "trainCost": 365.294, 
+        "trainIndex": 0.994908926349, 
+        "iteration": 73, 
+        "weightSize": 157.382
+    }, 
+    {
+        "trainCost": 364.759, 
+        "trainIndex": 0.994654372667, 
+        "iteration": 74, 
+        "weightSize": 157.855
+    }, 
+    {
+        "trainCost": 363.907, 
+        "trainIndex": 0.994682656409, 
+        "iteration": 75, 
+        "weightSize": 158.209
+    }, 
+    {
+        "trainCost": 362.538, 
+        "trainIndex": 0.995163480032, 
+        "iteration": 76, 
+        "weightSize": 158.61
+    }, 
+    {
+        "trainCost": 361.15, 
+        "trainIndex": 0.995220047517, 
+        "iteration": 77, 
+        "weightSize": 158.957
+    }, 
+    {
+        "trainCost": 360.006, 
+        "trainIndex": 0.995220047517, 
+        "iteration": 78, 
+        "weightSize": 159.352
+    }, 
+    {
+        "trainCost": 359.696, 
+        "trainIndex": 0.995050345062, 
+        "iteration": 79, 
+        "weightSize": 159.656
+    }, 
+    {
+        "trainCost": 359.117, 
+        "trainIndex": 0.994710940152, 
+        "iteration": 80, 
+        "weightSize": 160.076
+    }, 
+    {
+        "trainCost": 359.366, 
+        "trainIndex": 0.994314967757, 
+        "iteration": 81, 
+        "weightSize": 160.565
+    }, 
+    {
+        "trainCost": 360.809, 
+        "trainIndex": 0.993268469284, 
+        "iteration": 82, 
+        "weightSize": 161.205
+    }, 
+    {
+        "trainCost": 362.082, 
+        "trainIndex": 0.992815929404, 
+        "iteration": 83, 
+        "weightSize": 162.225
+    }, 
+    {
+        "trainCost": 358.679, 
+        "trainIndex": 0.993749292906, 
+        "iteration": 84, 
+        "weightSize": 163.225
+    }, 
+    {
+        "trainCost": 354.888, 
+        "trainIndex": 0.994795791379, 
+        "iteration": 85, 
+        "weightSize": 163.649
+    }, 
+    {
+        "trainCost": 352.181, 
+        "trainIndex": 0.996209978504, 
+        "iteration": 86, 
+        "weightSize": 163.94
+    }, 
+    {
+        "trainCost": 350.744, 
+        "trainIndex": 0.996266545989, 
+        "iteration": 87, 
+        "weightSize": 163.984
+    }, 
+    {
+        "trainCost": 349.884, 
+        "trainIndex": 0.996407964702, 
+        "iteration": 88, 
+        "weightSize": 164.21
+    }, 
+    {
+        "trainCost": 349.061, 
+        "trainIndex": 0.996040276049, 
+        "iteration": 89, 
+        "weightSize": 164.324
+    }, 
+    {
+        "trainCost": 348.775, 
+        "trainIndex": 0.995814006109, 
+        "iteration": 90, 
+        "weightSize": 164.658
+    }, 
+    {
+        "trainCost": 348.687, 
+        "trainIndex": 0.994908926349, 
+        "iteration": 91, 
+        "weightSize": 164.899
+    }, 
+    {
+        "trainCost": 348.65, 
+        "trainIndex": 0.995106912547, 
+        "iteration": 92, 
+        "weightSize": 165.429
+    }, 
+    {
+        "trainCost": 347.258, 
+        "trainIndex": 0.994880642607, 
+        "iteration": 93, 
+        "weightSize": 165.734
+    }, 
+    {
+        "trainCost": 345.724, 
+        "trainIndex": 0.995672587397, 
+        "iteration": 94, 
+        "weightSize": 166.266
+    }, 
+    {
+        "trainCost": 344.65, 
+        "trainIndex": 0.995757438624, 
+        "iteration": 95, 
+        "weightSize": 166.496
+    }, 
+    {
+        "trainCost": 344.867, 
+        "trainIndex": 0.995587736169, 
+        "iteration": 96, 
+        "weightSize": 166.882
+    }, 
+    {
+        "trainCost": 343.905, 
+        "trainIndex": 0.995389749972, 
+        "iteration": 97, 
+        "weightSize": 167.192
+    }, 
+    {
+        "trainCost": 342.845, 
+        "trainIndex": 0.996096843534, 
+        "iteration": 98, 
+        "weightSize": 167.588
+    }, 
+    {
+        "trainCost": 341.279, 
+        "trainIndex": 0.996266545989, 
+        "iteration": 99, 
+        "weightSize": 167.81
+    }
+]
