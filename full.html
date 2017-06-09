@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
+  <style>
+      path {
+        stroke: steelblue;
+        stroke-width: 2;
+        fill: none;
+      }
+    </style>
+</head>
+<body>
+   
+<div class="container">
+  <h2>iCages neural network visualization with cost, accuracy and predicted probabilities</h2>
+                                            
+  <span class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Number of hidden units
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">25</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">75</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Number of iterations
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">25</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">75</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">lambda
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.0</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.1</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.5</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.8</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">alpha
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.0</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.01</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.1</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.2</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Non-linear activation
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('relu')">relu</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('tanh')">tanh</a></li>
+    </ul>
+  </span>
+  <br>
+  <br>
+ <button class = "btn btn-default" type="button" onclick="start_vis()" />Start Visualization</button>
+    <span id="index">0</span>
+<br>
+<button class = "btn btn-default" type="button" onclick="window.location.reload()" />Stop Visualization</button>
+</div>
+
+<div id = "vis"></div>
+
+<div>Accuracy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cost </div>
+    <span id="accuracy"></span>
+    <span id="cost"></span>
+
+<div>Predicted Probabilities</div>
+    <span id="prob"></span>
+    
+<script type="text/javascript">
+      var prefix = "processData/test"
+        //var dir = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
+      var nonLinear = "relu";
+      var dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
+      var outputArray = new Array(403).fill(0);;
+      var dataArray = new Array(20);
+      var hiddenArray = new Array(5);
+
+      var predictdata = new Array(403).fill(0);;
+
+      var data = [];
+      var data2 = [];
+        
+
+      var height = 2500;
+      var width = 1200;
+      var index = 1;
+
+      var x = d3.scale.linear()
+              .domain([0, 100])
+              .range([5, 200]);
+
+      var y = d3.scale.linear()
+            .domain([0, 1])
+            .range([100, 0]);
+
+      var xaxis = d3.svg.axis()
+            .ticks(4)
+            .scale(x)
+            .orient("bottom");
+
+      var yaxis = d3.svg.axis()
+            .ticks(5)
+            .scale(y)
+            .orient("left");
+
+      var y1 = d3.scale.linear()
+            .domain([0, 5000])
+            .range([100, 0]);
+
+      var yaxis1 = d3.svg.axis()
+            .ticks(5)
+            .scale(y1)
+            .orient("left");
+      
+      var color = d3.scale.linear()
+            .domain([0, 1])
+            .range(["white", "red"]);
+
+      var predictx = d3.scale.linear()
+            .domain([0, 100])
+            .range([5, 700]);
+
+      var predicty = d3.scale.linear()
+            .domain([0, 1])
+            .range([1000, 0]);
+
+
+      var canvas = d3.select("#vis")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+      var circles = canvas.selectAll("circle")
+              .data(dataArray)
+              .enter()
+              .append("circle")
+              .attr("cx", 100)
+              .attr("cy", function(d, i) {return (i+1)*100;})
+              .attr("fill", "red")
+              .attr("r", 30);
+
+      var hiddenCircles = canvas.selectAll("c")
+              .data(hiddenArray)
+              .enter()
+              .append("circle")
+              .attr("cx", 600)
+              .attr("cy", function(d, i) {return (i+1)*150;})
+              .attr("fill", "green")
+              .attr("r", 30);
+
+      var outputCircle = canvas.append("circle")
+              .attr("cx", 1000)
+              .attr("cy", 700)
+              .attr("fill", "blue")
+              .attr("r", 30);
+
+      var firstLines = canvas.selectAll("line")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 150);
+
+      var firstLines2 = canvas.selectAll("i")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 300);
+
+      var firstLines3 = canvas.selectAll("j")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 450);
+
+      var firstLines4 = canvas.selectAll("k")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 600);
+
+      var firstLines5 = canvas.selectAll("l")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 750);
+
+      var secondLines = canvas.selectAll("m")
+              .data(hiddenArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 600)
+              .attr("y1", function(d, i) {return (i+1)*150;})
+              .attr("x2", 1000)
+              .attr("y2", 700);
+
+      var output = canvas.selectAll("text")
+                    .data(outputArray)
+                    .enter()
+                    .append("text")
+                    .attr("transform", function(d, i) {return "translate("+1050+","+10 * (i+1)+")";})
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 0.4)
+                    .attr("font-size", "0.6em")
+                    .text(function(d) {return d;})
+
+      function start_vis() {
+        d3.json(dir + "/predict.json", function (data1) {
+         
+        d3.json(dir + "/results.json", function(resultData) {
+          var canvasresult = d3.selectAll("#accuracy")
+                .append("svg")
+                .attr("width", 300)
+                .attr("height", 200)
+                .append("g")
+                .attr("transform", "translate(20, 20)")
+                .append("g")
+                .call(xaxis)
+                .append("g")
+                .call(yaxis)
+                .attr("transform", "translate(10,40)");
+                
+          var canvasresult1 = d3.selectAll("#cost")
+                .append("svg")
+                .attr("width", 300)
+                .attr("height", 200)
+                .append("g")
+                .attr("transform", "translate(40, 20)")
+                .append("g")
+                .call(xaxis)
+                .append("g")
+                .call(yaxis1)
+                .attr("transform", "translate(10,40)");
+
+          var line = d3.svg.line()
+                .x(function(d, i) {console.log(x(i)); return x(i);})
+                .y(function(d) {console.log(y(d)); return y(d);})
+                .interpolate("linear")
+
+          var line1 = d3.svg.line()
+                .x(function(d, i) {console.log(x(i)); return x(i);})
+                .y(function(d) {console.log(y1(d)); return y1(d);})
+                .interpolate("linear")
+
+          canvasresult.selectAll("path")
+              .data([data])
+              .enter()
+              .append("path")
+              .attr("d", line)
+
+          canvasresult1.selectAll("path")
+              .data([data2])
+              .enter()
+              .append("path")
+              .attr("d", line1)
+
+          var canvaspredict = d3.selectAll("#prob")
+                .append("svg")
+                .attr("width", 800)
+                .attr("height", 600)
+                .append("g")
+                .attr("transform", "translate(20, 20)")
+
+          var predictcircles = canvaspredict.selectAll("circlepredict")
+              .data(predictdata)
+              .enter()
+              .append("circle")
+              .attr("cx", function(d, i) {return ((i+1)*30)%700;})
+              .attr("cy", function(d, i) {return 30 * (((i+1)*30)/700);})
+              .attr("fill", function(d) {return color(d);})
+              .attr("r", 15)
+              .attr("stroke", "#000")
+              .attr("stroke-width", 1)
+              
+          var nodes = canvaspredict.selectAll("text")
+              .data(predictdata)
+              .enter()
+              .append("text")
+              .attr("transform", function(d, i) {return "translate("+((i+1)*30)%700+","+30 * (((i+1)*30)/700)+")";})
+              //.attr("cy", function(d, i) {return 25 * (((i+1)*20)/width);})
+              .attr("stroke", "#000")
+              .attr("stroke-width", 0.4)
+              .attr("font-size", "0.5em")
+              .text(function(d,i) {return i;});
+
+          setInterval(function() {
+            var v1 = resultData.shift();
+            data.push(v1.trainIndex);
+            data2.push(v1.trainCost);
+            //console.log(data)
+            canvasresult.selectAll("path")
+                .data([data])
+                .attr("d", line)
+            canvasresult1.selectAll("path")
+                .data([data2])
+                .attr("d", line1)
+
+            var v = data1.shift();
+              outputArray = []
+              temp = v.probs;
+              arrayLength = temp.length;
+              for (var i = 0; i < arrayLength; i++) {
+                outputArray[i] = temp[i].prob;
+              } 
+              d3.select("#index").text(index++);
+              canvas.selectAll("text")
+                    .data(outputArray)
+                    .attr("transform", function(d, i) {return "translate("+1050+","+10 * (i+1)+")";})
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 0.4)
+                    .attr("font-size", "0.6em")
+                    .text(function(d) {return d;})
+
+              predictcircles = canvaspredict.selectAll("circle")
+              .data(outputArray)
+              //.enter()
+              //.append("circle")
+              .attr("cx", function(d, i) {return ((i+1)*30)%700;})
+              .attr("cy", function(d, i) {return 30 * (((i+1)*30)/700);})
+              .attr("fill", function(d) {return color(d);})
+              .attr("r", 15)
+              .attr("stroke", "#000")
+              .attr("stroke-width", 1);
+          }, 500)
+        })
+      })
+      }
+
+      function update_nonlinear(nl) {
+        nonLinear = nl;
+        dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
+      
+      }
+
+
+</script>
+
+</body>
+</html>
