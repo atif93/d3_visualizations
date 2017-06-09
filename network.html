@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+   
+<div class="container">
+  <h2>iCages neural network visualization</h2>
+                                            
+  <span class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Number of hidden units
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">25</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">75</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Number of iterations
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">25</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">75</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">lambda
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.0</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.1</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.5</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.8</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">alpha
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.0</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.01</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.1</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">0.2</a></li>
+    </ul>
+  </span>
+  <span class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Non-linear activation
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('relu')">relu</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('tanh')">tanh</a></li>
+    </ul>
+  </span>
+  <br>
+  <br>
+ <button class = "btn btn-default" type="button" onclick="start_vis()" />Start Visualization</button>
+    <span id="index">0</span>
+<br>
+<button class = "btn btn-default" type="button" onclick="window.location.reload()" />Stop Visualization</button>
+</div>
+
+<div id = "vis"></div>
+
+<script type="text/javascript">
+      var prefix = "processData/test"
+        //var dir = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
+      var nonLinear = "relu";
+      var dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
+      var outputArray = new Array(403).fill(0);;
+      var dataArray = new Array(20);
+      var hiddenArray = new Array(5);
+      var height = 2500;
+      var width = 1200;
+      var index = 1;
+
+      var color = d3.scale.linear()
+            .domain([0, 100])
+            .range(["pink", "red"]);
+
+      var canvas = d3.select("#vis")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+      var circles = canvas.selectAll("circle")
+              .data(dataArray)
+              .enter()
+              .append("circle")
+              .attr("cx", 100)
+              .attr("cy", function(d, i) {return (i+1)*100;})
+              .attr("fill", "red")
+              .attr("r", 30);
+
+      var hiddenCircles = canvas.selectAll("c")
+              .data(hiddenArray)
+              .enter()
+              .append("circle")
+              .attr("cx", 600)
+              .attr("cy", function(d, i) {return (i+1)*150;})
+              .attr("fill", "green")
+              .attr("r", 30);
+
+      var outputCircle = canvas.append("circle")
+              .attr("cx", 1000)
+              .attr("cy", 700)
+              .attr("fill", "blue")
+              .attr("r", 30);
+
+      var firstLines = canvas.selectAll("line")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 150);
+
+      var firstLines2 = canvas.selectAll("i")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 300);
+
+      var firstLines3 = canvas.selectAll("j")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 450);
+
+      var firstLines4 = canvas.selectAll("k")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 600);
+
+      var firstLines5 = canvas.selectAll("l")
+              .data(dataArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 100)
+              .attr("y1", function(d, i) {return (i+1)*100;})
+              .attr("x2", 600)
+              .attr("y2", 750);
+
+      var secondLines = canvas.selectAll("m")
+              .data(hiddenArray)
+              .enter()
+              .append("line")
+              .style("stroke", "black")
+              .attr("x1", 600)
+              .attr("y1", function(d, i) {return (i+1)*150;})
+              .attr("x2", 1000)
+              .attr("y2", 700);
+
+      var output = canvas.selectAll("text")
+                    .data(outputArray)
+                    .enter()
+                    .append("text")
+                    .attr("transform", function(d, i) {return "translate("+1050+","+10 * (i+1)+")";})
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 0.4)
+                    .attr("font-size", "0.6em")
+                    .text(function(d) {return d;})
+
+      function start_vis() {
+        d3.json(dir + "/predict.json", function (data1) {
+          setInterval(function() {
+              var v = data1.shift();
+              outputArray = []
+              temp = v.probs;
+              arrayLength = temp.length;
+              for (var i = 0; i < arrayLength; i++) {
+                outputArray[i] = temp[i].prob;
+              } 
+              d3.select("#index").text(index++);
+              canvas.selectAll("text")
+                    .data(outputArray)
+                    .attr("transform", function(d, i) {return "translate("+1050+","+10 * (i+1)+")";})
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 0.4)
+                    .attr("font-size", "0.6em")
+                    .text(function(d) {return d;})
+            }, 1000)
+        })
+      }
+
+      function update_nonlinear(nl) {
+        nonLinear = nl;
+        dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
+      
+      }
+
+
+</script>
+
+</body>
+</html>
