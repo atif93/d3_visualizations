@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+			path {
+				stroke: steelblue;
+				stroke-width: 2;
+				fill: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="button" onclick="start_vis()" value="Start Visualization"/>
+		<div>Accuracy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cost </div>
+ 		<span id="accuracy"></span>
+		<span id="cost"></span>
+		
+		<script>
+
+			function start_vis() {
+				//d3.selectAll("span").remove();
+				//var prefix = "../../project/deeplearningMentor/processData/test"
+				var prefix = "processData/test"
+				//var dir = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
+				var dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+"relu";
+				var data = [];
+				var data2 = [];
+				var height = 100;
+				var width = 200;
+
+				var x = d3.scale.linear()
+							.domain([0, 100])
+							.range([5, width]);
+
+				var y = d3.scale.linear()
+							.domain([0, 1])
+							.range([height, 0]);
+
+				var xaxis = d3.svg.axis()
+							.ticks(4)
+							.scale(x)
+							.orient("bottom");
+
+				var yaxis = d3.svg.axis()
+							.ticks(5)
+							.scale(y)
+							.orient("left");
+
+				var y1 = d3.scale.linear()
+							.domain([0, 5000])
+							.range([height, 0]);
+
+				var yaxis1 = d3.svg.axis()
+							.ticks(5)
+							.scale(y1)
+							.orient("left");
+
+
+				d3.json(dir + "/results.json", function (data1) {
+					//console.log(data.trainIndex);
+
+					var canvas = d3.selectAll("#accuracy")
+								.append("svg")
+								.attr("width", width+100)
+								.attr("height", height+100)
+								.append("g")
+								.attr("transform", "translate(20, 20)")
+								.append("g")
+								.call(xaxis)
+								.append("g")
+								.call(yaxis)
+								.attr("transform", "translate(10,40)");
+								
+					var canvas1 = d3.selectAll("#cost")
+								.append("svg")
+								.attr("width", width+100)
+								.attr("height", height+100)
+								.append("g")
+								.attr("transform", "translate(40, 20)")
+								.append("g")
+								.call(xaxis)
+								.append("g")
+								.call(yaxis1)
+								.attr("transform", "translate(10,40)");
+
+					var line = d3.svg.line()
+								.x(function(d, i) {console.log(x(i)); return x(i);})
+								.y(function(d) {console.log(y(d)); return y(d);})
+								.interpolate("linear")
+
+					var line1 = d3.svg.line()
+								.x(function(d, i) {console.log(x(i)); return x(i);})
+								.y(function(d) {console.log(y1(d)); return y1(d);})
+								.interpolate("linear")
+
+					canvas.selectAll("path")
+							.data([data])
+							.enter()
+							.append("path")
+							.attr("d", line)
+
+					canvas1.selectAll("path")
+							.data([data2])
+							.enter()
+							.append("path")
+							.attr("d", line1)
+									
+					setInterval(function() {
+						var v = data1.shift();
+						data.push(v.trainIndex);
+						data2.push(v.trainCost);
+						//console.log(data)
+						canvas.selectAll("path")
+								.data([data])
+								.attr("d", line)
+						canvas1.selectAll("path")
+								.data([data2])
+								.attr("d", line1)
+					}, 1000)
+				})
+
+			}
+			//start_vis();
+			
+
+		</script>
+
+	</body>
+</html>
