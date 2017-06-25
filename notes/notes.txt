@@ -1,0 +1,369 @@
+1.
+- d3js.org
+- uses CSS3 selectors
+- d3js.org -> documentation -> API reference.
+
+2.
+- call the library: <script src="http://d3js.org/d3.v3.min.js"></script>
+- d3.select("p").text("changed text");
+- adding a new paragraph element
+d3.select("body").append("p").text("new para!!");
+- d3 is an object. all related functions and objects can be looked at through console.
+console.log(d3)
+
+3.
+- change style: d3.select("body")
+					.append("p")
+					.style("color", "red")
+					.text("some text");
+- change attribute: d3.select("body")
+					.attr();
+- svg shapes:
+start with a container (canvas) always.
+var canvas = d3.select("body")
+			.append("svg")
+			.attr("width", 500)
+			.attr("height", 500);
+some technical reasons for using attr instead of style.
+- circle
+var circle = canvas.append("circle")
+				.attr("cx", 300)
+				.attr("cy", 250)
+				.attr("r", 50)
+				.attr("fill", "red");	// in svg we use fill for color
+- rectangle
+var rect = canvas.append("rect")
+				.attr("width", 300)
+				.attr("height", 200);
+- line
+var line = canvas.append("line")
+				.attr("x1", 200)
+				.attr("y1", 300)
+				.attr("x2", 100)
+				.attr("y2", 400)
+				.attr("stroke", "green")
+				.attr("stroke-width", 10);
+
+4.
+- bind data
+generally data in file like csv, json.
+- var dataArray = [20, 40, 50];
+- var bars = canvas.selectAll("rect")
+					.data(dataArray)
+					.enter()	// for the data elements for which there's no DOM element
+						.append("rect")
+						.attr("width", function(d) { return d * 10; })
+						.attr("height", 50)
+						.attr("y", function(d, i) { return i * 100 });
+
+5.
+- scales
+they act as both functions and objects at the same time. 
+- transform the range into a range that can fit into the canvas.
+- var width = 500;
+var height = 500;
+var widthScale = d3.scale.linear()
+					.domain([0, 60])
+					.range([0, width]);
+var color = d3.scale.linear()
+				.domain([0,60])
+				.range(["red", "blue"]);
+var bars = canvas.selectAll("rect")
+					.data(dataArray)
+					.enter()
+						.append("rect")
+						.attr("width", function(d) { return widthScale(d); })
+						.attr("height", 50)
+						.attr("fill", function(d) {return color(d);})
+						.attr("y", function(d, i) { return i * 100 });
+
+6. 
+- group svg elements together.
+var canvas = ....
+			.append("g")	// whole canvas is a group now. can be seen in inspect element.
+			.attr("transform", "translate(50,50)") // simple shifting the group
+- add axis. a scale has to be passed.
+var axis = d3.svg.axis()
+			.scale(widthScale);
+then just call canvas.call(axis)
+- to change the position of axis:
+canvas.append("g")
+		.attr("transform", "translate(0, 400)");
+- changing the number of ticks:
+var axis = d3.svg.axis()
+			.ticks(5)
+			.scale(widthScale);
+
+7.
+- till now DOM elements < data elements (enter selection)
+other possibilities:
+DOM elements > data elements (exit selection)
+DOM elements < data elements (update selection)
+- var data = [10];
+var canvas = d3.select("body")
+				.append("svg")
+				.attr("width", 500)
+				.attr("height", 500)
+var circle = canvas.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 100)
+					.attr("r", 25);
+var circles = canvas.selectAll("circle")
+				.data(data)
+				.attr("fill", "red")
+				.enter()
+					.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 50)
+					.attr("fill", "green")
+					.attr("r", 25);
+Will have only one circle because only one data element and one circle.
+- red circle represents update selection.
+green represents enter selection.
+- var data = [10];
+var canvas = d3.select("body")
+				.append("svg")
+				.attr("width", 500)
+				.attr("height", 500)
+var circle1 = canvas.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 100)
+					.attr("r", 25);
+var circle2 = canvas.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 200)
+					.attr("r", 25);
+var circles = canvas.selectAll("circle")
+				.data(data)
+				.attr("fill", "red")
+				.exit()
+					.attr("fill", "green")
+green represents exit selection.					
+
+8.
+- transitions:
+var circle = canvas.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 50)
+					.attr("r", 25);
+circle.transition()
+		.duration(1500) // duration of the transition
+		.delay(2000) // start after 2 seconds
+		.attr("cx", 150)
+		.transition() // transition after transition
+		.attr("cy", 200);
+- at the end of the transition:
+circle.transition()
+		.duration(1500) // duration of the transition
+		.attr("cx", 150)
+		.each("end", function () {d3.select(this).attr("fill", "red")});
+each is an event listener. listening to end of transition here. 
+'this' refers to the circle object.
+
+9.
+working with arrays. open console.
+- normal javascript:
+data.shift(); // gives the first element
+- data.sort(d3.descending)
+d3.min(data)
+d3.max(data)
+d3.extent(data) // range 
+d3.sum(data)
+d3.mean(data)
+d3.median(data)
+d3.shuffle(data) // random order array
+
+10.
+- Working with files:
+json
+[
+	{"name": "Maria", "age": 30}
+	{"name": "Fred", "age": 50}
+]
+csv
+"name", "age"
+"Maria", 30
+"Fred", 50
+- have to run on a server.
+d3.json("mydata.json", function (data) {
+	var canvas = d3.select("body").append("svg")
+					.attr("width", 500)
+					.attr("height", 500)
+	canvas.selectAll("rect")
+			.data(data)
+			.enter()
+				.append("rect")
+				.attr("width", function(d) {return d.age*10})
+				.attr("height", 40)
+				.attr("y", function(d, i) {return i*50})
+				.attr("fill", "blue");
+	canvas.selectAll("text")
+			.data(data)
+			.enter()
+				.append("text")
+				.attr("fill", "white")
+				.attr("y", function(d, i) {return i * 10 + 10})
+})
+- for csv just replace d3.json with d3.csv
+
+11.
+- SVG path. Another element of path like rect and circle. Can be used to create any shape.
+use path generators to generate SVG paths.
+- var canvas = d3.select("body").append("svg")
+				.attr("width", 500)
+				.attr("height", 500);
+var data = [
+	{x: 10, y: 20},
+	{x: 40, y: 60},
+	{x: 50, y: 70}
+]
+var group = canvas.append("g")
+			.attr("transform", "translate(100, 100)");
+var line = d3.svg.line()
+	.x(function (d) {return d.x; }) // accessor functions
+	.y(function (d) {return d.y; });
+group.selectAll("path")
+		.data([data]) // passing full array
+		.enter()
+		.append("path")
+		.attr("d", line)
+		.attr("fill", "none")
+		.attr("stroke", "#000")
+		.attr("stroke-width", 10);
+
+12.
+- creating an arc 
+var r = 100;
+var p = Math.PI * 2;
+var arc = d3.svg.arc()
+	.innerRadius(r - 20)
+	.outerRadius(r)
+	.startAngle(0)
+	.endAngle(p - 1)
+group.append("path")
+	.attr("d", arc);
+
+13.
+- layouts: return some other representation of our data.
+pie layout: takes our data and returns a start angle, end angle and value for each data element
+- var color = d3.scale.ordinal() // for non-numeric domain
+				.range(["red", "blue", "orange"]);
+var group = canvas.append("g")
+			.attr("transform", "translate(300, 300)");
+var arc = d3.svg.arc()
+			.innerRadius(200)
+			.outerRadius(r);
+var pie = d3.layout.pie()
+			.value(function(d) {return d;});
+var arcs = group.selectAll(".arc") // class arc
+			.data(pie(data))
+			.enter()
+			.append("g")
+			.attr("class", "arc");
+arcs.append("path")
+			.attr("d", arc);
+			.attr("fill", function(d) {return color(d.data);});
+arcs.append("text")
+			.attr("transform", function (d) {return "translate(" + arc.centroid(d) + ")"; })
+			.attr("text-anchor", "middle")
+			.attr("font-size", "1.5em")
+			.text(function (d) {return d.data});
+- pie chart: make innerRadius 0
+
+14.
+Tree layout
+{
+	"name": "Max",
+	"children": [
+		{
+			"name": "Sylvia",
+			"children": [
+				{
+					"name": "Craig"}
+				}
+			]
+		},
+		{
+			"name": "David"
+		}
+	]
+}
+- generating the connecting path (diagonal)
+var diagonal = d3.svg.diagonal() //expects source and destination
+				.source({x: 10, y: 10})
+				.target({x: 300, y: 300});
+canvas.append("path")
+		.attr("fill", "none")
+		.attr("stroke", "black")
+		.attr("d", diagonal);
+
+15.
+- tree layout(2)
+var canvas = d3.select("body").append("svg")
+					.attr("width", 500)
+					.attr("height", 500)
+					.append("g")
+						.attr("transform", "translate(50, 50)");
+var tree = d3.layout.tree()
+			.size([400, 400]);
+d3.json("mydata.json", function (data) {
+	var nodes = tree.nodes(data);	
+	var links = tree.links(nodes);
+	var node = canvas.selectAll(".node")
+				.data(nodes)
+				.enter()
+				.append("g")
+					.attr("class", "node")
+					.attr("transform", function (d) {return "translate(" + d.x + "," + d.y + ")"})
+	node.append("circle")
+		.attr("r", 5)
+		.attr("fill", "steelblue");
+	node.append("text")
+		.text(function(d) {return d.name;})
+	var diagonal = d3.svg.diagonal()
+	canvas.selectAll(".link")
+		.data(links)
+		.enter()
+		.append("path")
+		.attr("class", "link")
+		.attr("fill", "none")
+		.attr("stroke", "#ADADAD")
+		.attr("d", diagonal);
+})
+- to rotate, just interchange d.x and d.y in node
+and add .projection(function (d) {return [d.y, d.x]}) to diagonal layout.
+
+16.
+- cluster layout. just replace d3.layout.tree() with d3.layout.cluster()
+- pack layout (Added value attributes to nodes in mydata.json):
+var width = 800, height = 600;
+var canvas = d3.select("body").append("svg")
+					.attr("width", width)
+					.attr("height", height)
+					.append("g")
+						.attr("transform", "translate(50, 50)");
+var pack = d3.layout.pack()
+			.size([width, height-50])
+			.pading(10);
+d3.json("mydata.json", function (data) {
+	var nodes = pack.nodes(data);	
+	var node = canvas.selectAll(".node")
+				.data(nodes)
+				.enter()
+				.append("g")
+					.attr("class", "node")
+					.attr("transform", function (d) {return "translate(" + d.x + "," + d.y + ")"})
+	node.append("circle")
+		.attr("r", function(d) {return d.r;})
+		.attr("fill", "steelblue")
+		.attr("opacity", 0.25)
+		.attr("stroke", "#ADADAD")
+		.attr("stroke-width", "2");
+	node.append("text")
+		.text(function(d) {return d.children ? "" : d.name;}) // only leaf nodes
+})
+- bubble chart (showing circles of only leaf nodes)
+Replace 
+.attr("fill", "steelblue") with .attr("fill", function(d) { return d.children ? "#fff" : "steelblue";})
+and
+.attr("stroke", "#ADADAD") with .attr("fill", function(d) { return d.children ? "#fff" : "#ADADAD";})
