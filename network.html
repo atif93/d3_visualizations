@@ -10,7 +10,9 @@
 <body>
    
 <div class="container">
-  <h2>iCages neural network visualization</h2>
+  <h2>iCAGES neural network visualization</h2>
+  <h4>A basic network architecture created using d3.js. The final predicted output values are being shown dynamically at each iteration. <br>
+    Press 'Start Visualization' for starting the visualization. For changing the configuration (right now implemented only for non-linear activation), press 'Stop Visualization' and then choose from the dropdown menus.</h4>
                                             
   <span class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Number of hidden units
@@ -53,7 +55,8 @@
     </ul>
   </span>
   <span class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Non-linear activation
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">
+    <span id="dropdown-nl">Non-linear activation</span>
     <span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
       <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('relu')">relu</a></li>
@@ -224,7 +227,7 @@
       function update_nonlinear(nl) {
         nonLinear = nl;
         dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
-      
+        document.getElementById('dropdown-nl').innerHTML = nl;
       }
 
 
