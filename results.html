@@ -8,9 +8,15 @@
 				fill: none;
 			}
 		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
+	<div class="container">
+  		<h3>Visualization to show dynamic time plots for accuracy and cost which update at each iteration.
+    	Press 'Start Visualization' for starting the visualization.</h3>
+    
 		<input type="button" onclick="start_vis()" value="Start Visualization"/>
 		<div>Accuracy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -18,6 +24,7 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cost </div>
  		<span id="accuracy"></span>
 		<span id="cost"></span>
+	</div>
 		
 		<script>
 
