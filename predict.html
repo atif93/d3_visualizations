@@ -1,15 +1,21 @@
 <html>
 	<head>
 		<script src="http://d3js.org/d3.v3.min.js"></script>
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
-
 	<body>
-		<input type="button" onclick="start_vis()" value="Start Visualization"/>
+	<div class="container">
+  		<h3>Visualization to show a circle for each patient which dynamically changes the color intensity based on the predicted probability at that iteration.
+    	Press 'Start Visualization' for starting the visualization.</h3>
+    	<input type="button" onclick="start_vis()" value="Start Visualization"/>
 		<span id="index">0</span>
  		
 		<div>Predicted Probabilities</div>
+	
+		
 		<span id="prob"></span>
+	</div>
 		<script>
 
 			function start_vis() {
