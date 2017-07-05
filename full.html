@@ -19,6 +19,14 @@
    
 <div class="container">
   <h2>iCAGES neural network visualization with cost, accuracy and predicted probabilities</h2>
+  <h4>Full visualization showing: <br>
+    <ul>
+      <li>A basic network architecture created using d3.js. The final predicted output values are being shown dynamically at each iteration.</li>
+      <li>Visualization to show dynamic time plots for accuracy and cost which update at each iteration.</li>
+      <li>Visualization to show a circle for each patient which dynamically changes the color intensity based on the predicted probability at that iteration.</li>
+    </ul>
+    Press 'Start Visualization' for starting the visualization. For changing the configuration (right now implemented only for non-linear activation), press 'Stop Visualization' and then choose from the dropdown menus.
+  </h4>
                                             
   <span class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Number of hidden units
@@ -76,22 +84,24 @@
 <br>
 <button class = "btn btn-default" type="button" onclick="window.location.reload()" />Stop Visualization</button>
 </div>
-
 <!--The division to show the network visualization-->
 <div id = "vis"></div>
 
+<div class='container'>
 <!--The division to show the Accuracy and Cost visualizations-->
-<div>Accuracy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<div><font size='+1.4'><b>Accuracy</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cost </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size='+1.4'><b>Cost</b></font> </div>
     <span id="accuracy"></span>
     <span id="cost"></span>
 
 <!--The division to show the predicted probability valued circle visualization-->
-<div>Predicted Probabilities</div>
+<div><font size='+1.4'><b>Predicted Probabilities</b></font></div>
     <span id="prob"></span>
     
+</div>
+
 <script type="text/javascript">
       var prefix = "processData/test"
       var nonLinear = "relu";
@@ -391,7 +401,7 @@
               .attr("r", 15)
               .attr("stroke", "#000")
               .attr("stroke-width", 1);
-          }, 500)
+          }, 1000)
         })
       })
       }
