@@ -61,7 +61,8 @@
     </ul>
   </span>
   <span class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Non-linear activation
+  <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">
+    <span id="dropdown-nl">Non-linear activation</span>
     <span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
       <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="update_nonlinear('relu')">relu</a></li>
@@ -400,6 +401,7 @@
       function update_nonlinear(nl) {
         nonLinear = nl;
         dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
+        document.getElementById('dropdown-nl').innerHTML = nl;
       }
 
 
