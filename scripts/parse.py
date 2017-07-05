@@ -4,28 +4,34 @@ import json
 
 config_file = "../../project/deeplearningMentor/model/runDeep.py"
 
+# Parsing the configuration file to get the neural network parameters
 with open(config_file) as f:
 	lines = f.readlines()
 
+	# reading the number of hidden layers
 	n_hidden = int(lines[3].split()[2])
+	# reading the number of iterations
 	n_steps = int(lines[4].split()[2])
-	
+	# reading the lambda and alpha paramters
 	lambda_str = lines[6].split()[2]
 	p_lambda = float(lambda_str[1:len(lambda_str)-1])
 	alpha_str = lines[7].split()[2]
 	p_alpha = float(alpha_str[1:len(alpha_str)-1])
-	
+	# reading the prefix string which is basically the path to the output files
 	prefix_str = lines[8].split()[2]
 	prefix = prefix_str[1:len(prefix_str)-1]
+	# reading the non linear function used
 	nonLinear_str = lines[9].split()[2]
 	nonLinear = nonLinear_str[1:len(nonLinear_str)-1]
 
 	print n_steps, n_hidden, p_lambda, p_alpha, prefix, nonLinear
 
+# Creating a direcory specific to this run to store the json files
 directory = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
 if not os.path.exists(directory):
     os.makedirs(directory)
 
+'''Reading each of the ouput files'''
 # groundTruth file
 path = prefix+"*groundTruth.txt"
 for filename in glob.glob(path):
@@ -152,19 +158,3 @@ for filename in glob.glob(path):
 
 with open(directory+'/weights.json', 'w') as outfile:  
     json.dump(weights, outfile, indent=4)
-
-'''
-reads parameters from config file
-make new directory with param
-find and open the 4 files
-
-show each file original and json format
-
-
-
-
-'''
-
-
-
-
