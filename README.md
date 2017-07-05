@@ -1,4 +1,4 @@
-Repository to host the visualizations for iCages.
+Repository to host the visualizations for iCAGES.
 
 
 Please click [here](https://atif93.github.io/d3_visualizations/) for the visualizations.
