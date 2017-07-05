@@ -40,7 +40,8 @@
 							.domain([0, 1])
 							.range([height, 0]);
 
-				var xaxis = d3.svg.axis()
+				// axes for accuracy
+      			var xaxis = d3.svg.axis()
 							.ticks(4)
 							.scale(x)
 							.orient("bottom");
@@ -54,7 +55,8 @@
 							.domain([0, 5000])
 							.range([height, 0]);
 
-				var yaxis1 = d3.svg.axis()
+				// axis for cost
+      			var yaxis1 = d3.svg.axis()
 							.ticks(5)
 							.scale(y1)
 							.orient("left");
@@ -63,7 +65,8 @@
 				d3.json(dir + "/results.json", function (data1) {
 					//console.log(data.trainIndex);
 
-					var canvas = d3.selectAll("#accuracy")
+					// appending the canvas for accuracy to the division with id 'accuracy'
+          			var canvas = d3.selectAll("#accuracy")
 								.append("svg")
 								.attr("width", width+100)
 								.attr("height", height+100)
@@ -75,7 +78,8 @@
 								.call(yaxis)
 								.attr("transform", "translate(10,40)");
 								
-					var canvas1 = d3.selectAll("#cost")
+					// appending the canvas for cost to the division with id 'cost'
+          			var canvas1 = d3.selectAll("#cost")
 								.append("svg")
 								.attr("width", width+100)
 								.attr("height", height+100)
@@ -87,28 +91,33 @@
 								.call(yaxis1)
 								.attr("transform", "translate(10,40)");
 
-					var line = d3.svg.line()
+					// line being used for the accuracy
+          			var line = d3.svg.line()
 								.x(function(d, i) {console.log(x(i)); return x(i);})
 								.y(function(d) {console.log(y(d)); return y(d);})
 								.interpolate("linear")
 
-					var line1 = d3.svg.line()
+					// line being used for the path
+          			var line1 = d3.svg.line()
 								.x(function(d, i) {console.log(x(i)); return x(i);})
 								.y(function(d) {console.log(y1(d)); return y1(d);})
 								.interpolate("linear")
 
-					canvas.selectAll("path")
+					// appending a path to show the accuracy graph
+          			canvas.selectAll("path")
 							.data([data])
 							.enter()
 							.append("path")
 							.attr("d", line)
 
-					canvas1.selectAll("path")
+					// appending a path to show the cost graph
+          			canvas1.selectAll("path")
 							.data([data2])
 							.enter()
 							.append("path")
 							.attr("d", line1)
 									
+					// setting the animation interval for the visualization
 					setInterval(function() {
 						var v = data1.shift();
 						data.push(v.trainIndex);

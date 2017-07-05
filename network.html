@@ -86,11 +86,13 @@
             .domain([0, 100])
             .range(["pink", "red"]);
 
+      // appending a canvas for the network visualization to the division with id vis
       var canvas = d3.select("#vis")
             .append("svg")
             .attr("width", width)
             .attr("height", height);
 
+      // showing the input layer circles
       var circles = canvas.selectAll("circle")
               .data(dataArray)
               .enter()
@@ -100,6 +102,7 @@
               .attr("fill", "red")
               .attr("r", 30);
 
+      // showing the hidden layer circles
       var hiddenCircles = canvas.selectAll("c")
               .data(hiddenArray)
               .enter()
@@ -109,12 +112,14 @@
               .attr("fill", "green")
               .attr("r", 30);
 
+      // showing the output layer circles
       var outputCircle = canvas.append("circle")
               .attr("cx", 1000)
               .attr("cy", 700)
               .attr("fill", "blue")
               .attr("r", 30);
 
+      // showing the lines from first layer circles to hidden layer circle1
       var firstLines = canvas.selectAll("line")
               .data(dataArray)
               .enter()
@@ -125,6 +130,7 @@
               .attr("x2", 600)
               .attr("y2", 150);
 
+      // showing the lines from first layer circles to hidden layer circle2
       var firstLines2 = canvas.selectAll("i")
               .data(dataArray)
               .enter()
@@ -135,6 +141,7 @@
               .attr("x2", 600)
               .attr("y2", 300);
 
+      // showing the lines from first layer circles to hidden layer circle3
       var firstLines3 = canvas.selectAll("j")
               .data(dataArray)
               .enter()
@@ -145,6 +152,7 @@
               .attr("x2", 600)
               .attr("y2", 450);
 
+      // showing the lines from first layer circles to hidden layer circle4
       var firstLines4 = canvas.selectAll("k")
               .data(dataArray)
               .enter()
@@ -155,6 +163,7 @@
               .attr("x2", 600)
               .attr("y2", 600);
 
+      // showing the lines from first layer circles to hidden layer circle5
       var firstLines5 = canvas.selectAll("l")
               .data(dataArray)
               .enter()
@@ -165,6 +174,7 @@
               .attr("x2", 600)
               .attr("y2", 750);
 
+      // showing the lines from hidden layer circles to output layer circle
       var secondLines = canvas.selectAll("m")
               .data(hiddenArray)
               .enter()
@@ -175,6 +185,7 @@
               .attr("x2", 1000)
               .attr("y2", 700);
 
+      // showing the predicted probabilities by the neural network
       var output = canvas.selectAll("text")
                     .data(outputArray)
                     .enter()
@@ -187,6 +198,7 @@
 
       function start_vis() {
         d3.json(dir + "/predict.json", function (data1) {
+          // setting the animation interval for all the visualizations
           setInterval(function() {
               var v = data1.shift();
               outputArray = []
@@ -207,6 +219,8 @@
         })
       }
 
+      // function to change the non-linear layer from the drop-down menu. right now this is
+      // implemented only for non-linear. ideally should be implemented for all drop-downs
       function update_nonlinear(nl) {
         nonLinear = nl;
         dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;

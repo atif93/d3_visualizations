@@ -23,11 +23,13 @@
 				var width = 700;
 				var index = 1;
 
-				var color = d3.scale.linear()
+				// color scale for changing the colors in resulting predicted probabilities
+      			var color = d3.scale.linear()
 						.domain([0, 1])
 						.range(["white", "red"]);
 
-				var x = d3.scale.linear()
+				// scale for predicted probability circles
+      			var x = d3.scale.linear()
 							.domain([0, 100])
 							.range([5, width]);
 
@@ -38,14 +40,16 @@
 				d3.json(dir + "/predict.json", function (data1) {
 					//console.log(data.trainIndex);
 
-					var canvas = d3.selectAll("#prob")
+					// appending the canvas for predicted probability circles to the division with id 'prob'
+          			var canvas = d3.selectAll("#prob")
 								.append("svg")
 								.attr("width", width+100)
 								.attr("height", height+100)
 								.append("g")
 								.attr("transform", "translate(20, 20)")
 			
-					var circles = canvas.selectAll("circle")
+					// appending the predicted probability circles to the canvas
+          			var circles = canvas.selectAll("circle")
 							.data(data)
 							.enter()
 							.append("circle")
@@ -56,7 +60,8 @@
 							.attr("stroke", "#000")
 							.attr("stroke-width", 1)
 							
-					var nodes = canvas.selectAll("text")
+					// showing the patient number on each of the circles
+          			var nodes = canvas.selectAll("text")
 							.data(data)
 							.enter()
 							.append("text")
@@ -67,13 +72,9 @@
 							.attr("font-size", "0.5em")
 							.text(function(d,i) {return i;});
 
-					// canvas.selectAll("path")
-					// 		.data([data])
-					// 		.enter()
-					// 		.append("path")
-					// 		.attr("d", line)
 									
-					setInterval(function() {
+					// setting the animation interval for the visualization
+          			setInterval(function() {
 						var v = data1.shift();
 						data = []
 						temp = v.probs;

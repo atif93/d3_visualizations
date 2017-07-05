@@ -18,7 +18,7 @@
 <body>
    
 <div class="container">
-  <h2>iCages neural network visualization with cost, accuracy and predicted probabilities</h2>
+  <h2>iCAGES neural network visualization with cost, accuracy and predicted probabilities</h2>
                                             
   <span class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Number of hidden units
@@ -76,8 +76,10 @@
 <button class = "btn btn-default" type="button" onclick="window.location.reload()" />Stop Visualization</button>
 </div>
 
+<!--The division to show the network visualization-->
 <div id = "vis"></div>
 
+<!--The division to show the Accuracy and Cost visualizations-->
 <div>Accuracy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -85,13 +87,16 @@
     <span id="accuracy"></span>
     <span id="cost"></span>
 
+<!--The division to show the predicted probability valued circle visualization-->
 <div>Predicted Probabilities</div>
     <span id="prob"></span>
     
 <script type="text/javascript">
       var prefix = "processData/test"
-        //var dir = prefix+"_"+str(n_hidden)+"_"+str(n_steps)+"_"+str(p_lambda)+"_"+str(p_alpha)+"_"+str(nonLinear)
       var nonLinear = "relu";
+
+      // the directory of the json output
+      // right now only non-linear is made variable. Ideally everything should be variable
       var dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
       var outputArray = new Array(403).fill(0);;
       var dataArray = new Array(20);
@@ -115,6 +120,7 @@
             .domain([0, 1])
             .range([100, 0]);
 
+      // axes for accuracy
       var xaxis = d3.svg.axis()
             .ticks(4)
             .scale(x)
@@ -129,15 +135,18 @@
             .domain([0, 5000])
             .range([100, 0]);
 
+      // axis for cost
       var yaxis1 = d3.svg.axis()
             .ticks(5)
             .scale(y1)
             .orient("left");
       
+      // color scale for changing the colors in resulting predicted probabilities
       var color = d3.scale.linear()
             .domain([0, 1])
             .range(["white", "red"]);
 
+      // scale for predicted probability circles
       var predictx = d3.scale.linear()
             .domain([0, 100])
             .range([5, 700]);
@@ -146,12 +155,13 @@
             .domain([0, 1])
             .range([1000, 0]);
 
-
+      // appending a canvas for the network visualization to the division with id vis
       var canvas = d3.select("#vis")
             .append("svg")
             .attr("width", width)
             .attr("height", height);
 
+      // showing the input layer circles
       var circles = canvas.selectAll("circle")
               .data(dataArray)
               .enter()
@@ -161,6 +171,7 @@
               .attr("fill", "red")
               .attr("r", 30);
 
+      // showing the hidden layer circles
       var hiddenCircles = canvas.selectAll("c")
               .data(hiddenArray)
               .enter()
@@ -170,12 +181,14 @@
               .attr("fill", "green")
               .attr("r", 30);
 
+      // showing the output layer circles
       var outputCircle = canvas.append("circle")
               .attr("cx", 1000)
               .attr("cy", 700)
               .attr("fill", "blue")
               .attr("r", 30);
 
+      // showing the lines from first layer circles to hidden layer circle1
       var firstLines = canvas.selectAll("line")
               .data(dataArray)
               .enter()
@@ -186,6 +199,7 @@
               .attr("x2", 600)
               .attr("y2", 150);
 
+      // showing the lines from first layer circles to hidden layer circle2
       var firstLines2 = canvas.selectAll("i")
               .data(dataArray)
               .enter()
@@ -196,6 +210,7 @@
               .attr("x2", 600)
               .attr("y2", 300);
 
+      // showing the lines from first layer circles to hidden layer circle3
       var firstLines3 = canvas.selectAll("j")
               .data(dataArray)
               .enter()
@@ -206,6 +221,7 @@
               .attr("x2", 600)
               .attr("y2", 450);
 
+      // showing the lines from first layer circles to hidden layer circle4
       var firstLines4 = canvas.selectAll("k")
               .data(dataArray)
               .enter()
@@ -216,6 +232,7 @@
               .attr("x2", 600)
               .attr("y2", 600);
 
+      // showing the lines from first layer circles to hidden layer circle5
       var firstLines5 = canvas.selectAll("l")
               .data(dataArray)
               .enter()
@@ -226,6 +243,7 @@
               .attr("x2", 600)
               .attr("y2", 750);
 
+      // showing the lines from hidden layer circles to output layer circle
       var secondLines = canvas.selectAll("m")
               .data(hiddenArray)
               .enter()
@@ -236,6 +254,7 @@
               .attr("x2", 1000)
               .attr("y2", 700);
 
+      // showing the predicted probabilities by the neural network
       var output = canvas.selectAll("text")
                     .data(outputArray)
                     .enter()
@@ -250,6 +269,7 @@
         d3.json(dir + "/predict.json", function (data1) {
          
         d3.json(dir + "/results.json", function(resultData) {
+          // appending the canvas for accuracy to the division with id 'accuracy'
           var canvasresult = d3.selectAll("#accuracy")
                 .append("svg")
                 .attr("width", 300)
@@ -262,6 +282,7 @@
                 .call(yaxis)
                 .attr("transform", "translate(10,40)");
                 
+          // appending the canvas for cost to the division with id 'cost'
           var canvasresult1 = d3.selectAll("#cost")
                 .append("svg")
                 .attr("width", 300)
@@ -274,28 +295,34 @@
                 .call(yaxis1)
                 .attr("transform", "translate(10,40)");
 
+
+          // line being used for the accuracy
           var line = d3.svg.line()
                 .x(function(d, i) {console.log(x(i)); return x(i);})
                 .y(function(d) {console.log(y(d)); return y(d);})
                 .interpolate("linear")
 
+          // line being used for the path
           var line1 = d3.svg.line()
                 .x(function(d, i) {console.log(x(i)); return x(i);})
                 .y(function(d) {console.log(y1(d)); return y1(d);})
                 .interpolate("linear")
 
+          // appending a path to show the accuracy graph
           canvasresult.selectAll("path")
               .data([data])
               .enter()
               .append("path")
               .attr("d", line)
 
+          // appending a path to show the cost graph
           canvasresult1.selectAll("path")
               .data([data2])
               .enter()
               .append("path")
               .attr("d", line1)
 
+          // appending the canvas for predicted probability circles to the division with id 'prob'
           var canvaspredict = d3.selectAll("#prob")
                 .append("svg")
                 .attr("width", 800)
@@ -303,6 +330,7 @@
                 .append("g")
                 .attr("transform", "translate(20, 20)")
 
+          // appending the predicted probability circles to the canvas
           var predictcircles = canvaspredict.selectAll("circlepredict")
               .data(predictdata)
               .enter()
@@ -314,22 +342,23 @@
               .attr("stroke", "#000")
               .attr("stroke-width", 1)
               
+          // showing the patient number on each of the circles
           var nodes = canvaspredict.selectAll("text")
               .data(predictdata)
               .enter()
               .append("text")
               .attr("transform", function(d, i) {return "translate("+((i+1)*30)%700+","+30 * (((i+1)*30)/700)+")";})
-              //.attr("cy", function(d, i) {return 25 * (((i+1)*20)/width);})
               .attr("stroke", "#000")
               .attr("stroke-width", 0.4)
               .attr("font-size", "0.5em")
               .text(function(d,i) {return i;});
 
+
+          // setting the animation interval for all the visualizations
           setInterval(function() {
             var v1 = resultData.shift();
             data.push(v1.trainIndex);
             data2.push(v1.trainCost);
-            //console.log(data)
             canvasresult.selectAll("path")
                 .data([data])
                 .attr("d", line)
@@ -355,8 +384,6 @@
 
               predictcircles = canvaspredict.selectAll("circle")
               .data(outputArray)
-              //.enter()
-              //.append("circle")
               .attr("cx", function(d, i) {return ((i+1)*30)%700;})
               .attr("cy", function(d, i) {return 30 * (((i+1)*30)/700);})
               .attr("fill", function(d) {return color(d);})
@@ -368,10 +395,11 @@
       })
       }
 
+      // function to change the non-linear layer from the drop-down menu. right now this is
+      // implemented only for non-linear. ideally should be implemented for all drop-downs
       function update_nonlinear(nl) {
         nonLinear = nl;
         dir = prefix+"_"+"100"+"_"+"100"+"_"+"0.0"+"_"+"0.01"+"_"+nonLinear;
-      
       }
 
 

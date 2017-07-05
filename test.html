@@ -15,12 +15,14 @@
 						.domain([0, 100])
 						.range(["pink", "red"]);
 
-			var canvas = d3.select("body")
+			// appending a canvas for the network visualization to the body
+      		var canvas = d3.select("body")
 						.append("svg")
 						.attr("width", width)
 						.attr("height", height);
 
-			var circles = canvas.selectAll("circle")
+			// showing the input layer circles
+      		var circles = canvas.selectAll("circle")
 							.data(dataArray)
 							.enter()
 							.append("circle")
@@ -29,7 +31,8 @@
 							.attr("fill", "red")
 							.attr("r", 30);
 
-			var hiddenCircles = canvas.selectAll("c")
+			// showing the hidden layer circles
+      		var hiddenCircles = canvas.selectAll("c")
 							.data(hiddenArray)
 							.enter()
 							.append("circle")
@@ -38,13 +41,15 @@
 							.attr("fill", "green")
 							.attr("r", 30);
 
-			var outputCircle = canvas.append("circle")
+			// showing the output layer circles
+      		var outputCircle = canvas.append("circle")
 							.attr("cx", 1100)
 							.attr("cy", 700)
 							.attr("fill", "blue")
 							.attr("r", 30);
 
-			var firstLines = canvas.selectAll("line")
+			// showing the lines from first layer circles to hidden layer circle1
+      		var firstLines = canvas.selectAll("line")
 							.data(dataArray)
 							.enter()
 							.append("line")
@@ -54,7 +59,8 @@
 							.attr("x2", 700)
 							.attr("y2", 150);
 
-			var firstLines2 = canvas.selectAll("l")
+			// showing the lines from first layer circles to hidden layer circle2
+      		var firstLines2 = canvas.selectAll("l")
 							.data(dataArray)
 							.enter()
 							.append("line")
@@ -65,7 +71,8 @@
 							.attr("y2", 600);
 
 
-			var secondLines = canvas.selectAll("l")
+			// showing the lines from hidden layer circles to output layer circle
+      		var secondLines = canvas.selectAll("l")
 							.data(hiddenArray)
 							.enter()
 							.append("line")
